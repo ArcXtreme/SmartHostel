@@ -33,15 +33,14 @@ if (!process.env.JWT_SECRET) {
   console.warn("JWT_SECRET not set — using insecure default for development only");
 }
 
-app.use(
-  cors({
-    origin(origin, cb) {
-      if (!origin) return cb(null, true);
-      if (allowedOrigins.includes(origin)) return cb(null, true);
-      return cb(new Error("Not allowed by CORS"));
-    },
-  })
-);
+app.use(cors({
+  origin: allowedOrigins,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
+}));
+
+app.options("*", cors()); // IMPORTANT for preflight
 app.use(express.json({ limit: "2mb" }));
 
 app.use("/uploads", express.static(uploadRoot));
