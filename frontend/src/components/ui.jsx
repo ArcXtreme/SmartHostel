@@ -1,12 +1,14 @@
 import React from "react";
 
 export function Container({ children }) {
-  return <div className="mx-auto w-full max-w-6xl px-4">{children}</div>;
+  return <div className="mx-auto w-full max-w-5xl px-4 pb-16 sm:px-6">{children}</div>;
 }
 
 export function Card({ children, className = "" }) {
   return (
-    <div className={`rounded-2xl border border-white/10 bg-white/5 p-5 shadow-lg ${className}`}>
+    <div
+      className={`rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm ${className}`}
+    >
       {children}
     </div>
   );
@@ -16,19 +18,22 @@ export function Button({
   children,
   className = "",
   variant = "primary",
+  size = "md",
+  type = "button",
   ...props
 }) {
   const base =
-    "inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition disabled:opacity-50 disabled:cursor-not-allowed";
+    "hms-focus inline-flex min-h-[48px] items-center justify-center gap-2 rounded-2xl px-5 font-semibold transition disabled:cursor-not-allowed disabled:opacity-50";
+  const sizes = size === "lg" ? "text-lg py-3 px-6" : "text-base py-2.5";
   const styles =
     variant === "ghost"
-      ? "bg-transparent hover:bg-white/5 border border-white/10 text-white"
+      ? "border border-slate-300 bg-white text-slate-800 hover:bg-slate-50"
       : variant === "danger"
-      ? "bg-red-500/90 hover:bg-red-500 text-white"
-      : "bg-indigo-500/90 hover:bg-indigo-500 text-white";
+      ? "bg-red-600 text-white hover:bg-red-500"
+      : "bg-sky-600 text-white hover:bg-sky-500";
 
   return (
-    <button className={`${base} ${styles} ${className}`} {...props}>
+    <button type={type} className={`${base} ${sizes} ${styles} ${className}`} {...props}>
       {children}
     </button>
   );
@@ -36,10 +41,22 @@ export function Button({
 
 export function Input({ label, className = "", ...props }) {
   return (
-    <label className="block">
-      {label ? <div className="mb-2 text-sm text-white/80">{label}</div> : null}
+    <label className="block w-full">
+      {label ? <div className="mb-2 text-base font-medium text-slate-700">{label}</div> : null}
       <input
-        className={`w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-white placeholder:text-white/40 outline-none focus:border-indigo-400/70 ${className}`}
+        className={`hms-focus w-full min-h-[48px] rounded-2xl border border-slate-300 bg-white px-4 text-lg text-slate-900 placeholder:text-slate-400 ${className}`}
+        {...props}
+      />
+    </label>
+  );
+}
+
+export function TextArea({ label, className = "", ...props }) {
+  return (
+    <label className="block w-full">
+      {label ? <div className="mb-2 text-base font-medium text-slate-700">{label}</div> : null}
+      <textarea
+        className={`hms-focus w-full min-h-[120px] rounded-2xl border border-slate-300 bg-white px-4 py-3 text-lg text-slate-900 placeholder:text-slate-400 ${className}`}
         {...props}
       />
     </label>
@@ -48,10 +65,10 @@ export function Input({ label, className = "", ...props }) {
 
 export function Select({ label, className = "", children, ...props }) {
   return (
-    <label className="block">
-      {label ? <div className="mb-2 text-sm text-white/80">{label}</div> : null}
+    <label className="block w-full">
+      {label ? <div className="mb-2 text-base font-medium text-slate-700">{label}</div> : null}
       <select
-        className={`w-full rounded-xl border border-white/10 bg-slate-950/40 px-3 py-2 text-white outline-none focus:border-indigo-400/70 ${className}`}
+        className={`hms-focus w-full min-h-[48px] rounded-2xl border border-slate-300 bg-white px-4 text-lg text-slate-900 ${className}`}
         {...props}
       >
         {children}
@@ -63,19 +80,18 @@ export function Select({ label, className = "", children, ...props }) {
 export function Alert({ type = "info", children }) {
   const cls =
     type === "error"
-      ? "border-red-500/30 bg-red-500/10 text-red-100"
+      ? "border-red-200 bg-red-50 text-red-800"
       : type === "success"
-      ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-100"
-      : "border-white/10 bg-white/5 text-white/90";
-  return <div className={`rounded-xl border px-4 py-3 text-sm ${cls}`}>{children}</div>;
+      ? "border-emerald-200 bg-emerald-50 text-emerald-900"
+      : "border-sky-200 bg-sky-50 text-sky-900";
+  return <div className={`rounded-2xl border px-4 py-3 text-base ${cls}`}>{children}</div>;
 }
 
-export function Spinner() {
+export function Spinner({ label = "…" }) {
   return (
-    <div className="inline-flex items-center gap-2 text-sm text-white/80">
-      <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white/80" />
-      Loading…
+    <div className="inline-flex items-center gap-3 text-base text-slate-600">
+      <span className="h-6 w-6 animate-spin rounded-full border-2 border-slate-300 border-t-sky-600" />
+      {label}
     </div>
   );
 }
-

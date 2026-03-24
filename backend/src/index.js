@@ -1,10 +1,22 @@
 require("dotenv").config();
+const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
+const { uploadRoot } = require("./middleware/upload");
 
 const authRoutes = require("./routes/auth");
-const requestRoutes = require("./routes/requests");
+const dashboardRoutes = require("./routes/dashboard");
+const notificationsRoutes = require("./routes/notifications");
+const complaintsRoutes = require("./routes/complaints");
+const cleaningRoutes = require("./routes/cleaning");
+const laundryRoutes = require("./routes/laundry");
+const messRoutes = require("./routes/mess");
+const lostfoundRoutes = require("./routes/lostfound");
+const noticesRoutes = require("./routes/notices");
+const adminRoutes = require("./routes/admin");
+const workerRoutes = require("./routes/worker");
+const studentRoutes = require("./routes/student");
 
 const app = express();
 
@@ -17,29 +29,42 @@ if (!MONGODB_URI) {
   console.error("Missing MONGODB_URI env variable");
   process.exit(1);
 }
+if (!process.env.JWT_SECRET) {
+  console.warn("JWT_SECRET not set — using insecure default for development only");
+}
 
 app.use(
   cors({
     origin(origin, cb) {
-      // allow non-browser tools (no Origin header)
       if (!origin) return cb(null, true);
       if (allowedOrigins.includes(origin)) return cb(null, true);
       return cb(new Error("Not allowed by CORS"));
     },
   })
 );
-app.use(express.json());
+app.use(express.json({ limit: "2mb" }));
+
+app.use("/uploads", express.static(uploadRoot));
 
 app.get("/", (req, res) => {
-  res.json({ status: "ok", message: "Smart Hostel API" });
+  res.json({ status: "ok", name: "Hostel Management System API" });
 });
 
-app.use("/", authRoutes);
-app.use("/", requestRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api", dashboardRoutes);
+app.use("/api", notificationsRoutes);
+app.use("/api", complaintsRoutes);
+app.use("/api", cleaningRoutes);
+app.use("/api", laundryRoutes);
+app.use("/api", messRoutes);
+app.use("/api", lostfoundRoutes);
+app.use("/api", noticesRoutes);
+app.use("/api", adminRoutes);
+app.use("/api", workerRoutes);
+app.use("/api", studentRoutes);
 
 connectDB(MONGODB_URI).then(() => {
   app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
   });
 });
-

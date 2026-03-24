@@ -7,13 +7,17 @@ body {
 
 body {
   margin: 0;
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans",
-    "Apple Color Emoji", "Segoe UI Emoji";
-  background: #0b1220;
-  color: #e5e7eb;
+  font-family: "Noto Sans Gurmukhi", "Noto Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI,
+    Roboto, Arial, sans-serif;
+  background: #f4f7fb;
+  color: #374151;
 }
 
-/* better default */
 * {
   box-sizing: border-box;
+}
+
+.hms-focus:focus-visible {
+  outline: 2px solid #93c5fd;
+  outline-offset: 2px;
 }

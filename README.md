@@ -1,119 +1,136 @@
-# Smart Hostel Cleaning (Full-Stack Website)
+# Hostel Management System
 
-Responsive **web** application for hostel cleaning requests (students) and request management (workers).
+Full-stack web app for college hostels: **students**, **admin**, and **workers** manage cleaning, maintenance, complaints, laundry, mess feedback, lost & found, and notices. UI is simple (white / light blue / grey), responsive, and **bilingual (English + Punjabi)**.
+
+## Tech stack
+
+- **Frontend:** React (Vite), React Router, Axios, Tailwind CSS v4  
+- **Backend:** Node.js, Express, JWT auth, Multer (file uploads)  
+- **Database:** MongoDB (M Mongoose)
 
 ## Project structure
 
-- `frontend/`: React (Vite) website
-- `backend/`: Node.js + Express REST API + MongoDB (Mongoose)
-
-## Features
-
-- **Landing page**: choose Student or Worker
-- **Student**
-  - Sign up / Sign in with **room number + password**
-  - Dashboard:
-    - Display room number
-    - Schedule cleaning request (time slot)
-    - View **today’s requests** (all rooms)
-    - View **cleaning history** (your room)
-- **Worker**
-  - Login (worker ID + password)
-  - Dashboard:
-    - View requests (today/all)
-    - Mark request as completed
-
-## REST API (backend)
-
-- `POST /signup`
-- `POST /login`
-- `POST /request-cleaning`
-- `GET /today-requests`
-- `GET /history` (optional `?roomNumber=101`)
-- `PATCH /mark-complete`
+```
+smarthostel/
+├── backend/
+│   ├── src/
+│   │   ├── index.js              # Express app, CORS, /uploads static
+│   │   ├── config/db.js
+│   │   ├── middleware/
+│   │   │   ├── auth.js          # JWT sign + requireRole
+│   │   │   └── upload.js        # Multer (uploads/ subfolders)
+│   │   ├── models/              # User, Complaint, RoomCleaningRequest, LaundryOrder,
+│   │   │                        # MessFeedback, LostFoundItem, Notice, AppNotification
+│   │   ├── routes/              # auth, dashboard, complaints, cleaning, laundry, mess,
+│   │   │                        # lostfound, notices, notifications, admin, worker, student
+│   │   └── utils/notify.js
+│   └── uploads/                  # Created at runtime (gitignored)
+├── frontend/
+│   ├── src/
+│   │   ├── api/client.js        # Axios + Bearer token + assetUrl()
+│   │   ├── auth/storage.js
+│   │   ├── i18n/                # English + Punjabi strings
+│   │   ├── components/
+│   │   └── pages/               # Landing, auth, student/*, admin/*, worker/*
+│   └── index.html
+└── README.md
+```
 
 ## Run locally
 
-### 1) Backend
+### 1. MongoDB
 
-1. Open terminal in `backend/`
-2. Install:
+Use a local MongoDB or [MongoDB Atlas](https://www.mongodb.com/cloud/atlas). Note the connection string.
+
+### 2. Backend
 
 ```bash
+cd backend
 npm install
 ```
 
-3. Create `.env` from `.env.example` and fill values:
-   - `MONGODB_URI`: MongoDB connection string (MongoDB Atlas recommended)
-   - `PORT`: backend port (default `4000`)
-   - `CLIENT_ORIGIN`: frontend origin(s), comma-separated  
-     Example: `http://localhost:5173`
+Copy `backend/.env.example` to `backend/.env` and set:
 
-4. Start:
+- `MONGODB_URI` – connection string  
+- `JWT_SECRET` – long random string (required for production)  
+- `CLIENT_ORIGIN` – `http://localhost:5173` (comma-separated if multiple)  
+
+Start:
 
 ```bash
 npm run dev
 ```
 
-Backend runs at `http://localhost:4000`.
+API root: `http://localhost:4000`  
+Uploaded files are served at `http://localhost:4000/uploads/...`.
 
-### 2) Frontend
-
-1. Open terminal in `frontend/`
-2. Install:
+### 3. Frontend
 
 ```bash
+cd frontend
 npm install
 ```
 
-3. Create `.env` from `.env.example`:
-   - `VITE_API_BASE_URL`: `http://localhost:4000`
+Copy `frontend/.env.example` to `frontend/.env.local` (or `.env`):
 
-4. Start:
+- `VITE_API_BASE_URL=http://localhost:4000`
+
+Start:
 
 ```bash
 npm run dev
 ```
 
-Frontend runs at `http://localhost:5173`.
+Open `http://localhost:5173`.
 
-## Deployment guide
+## Main API routes (prefix `/api`)
 
-### MongoDB (Atlas)
+| Method | Path | Purpose |
+|--------|------|---------|
+| POST | `/api/auth/signup/student` | Student registration |
+| POST | `/api/auth/signup/admin` | Admin registration |
+| POST | `/api/auth/signup/worker` | Worker registration |
+| POST | `/api/auth/login` | Login (role + email or workerId) |
+| GET | `/api/auth/me` | Current user (JWT) |
+| GET | `/api/dashboard` | Role-based dashboard summary |
+| GET/POST/PATCH | `/api/notifications`, `/api/notifications/:id/read` | In-app notifications |
+| POST/GET/PATCH | `/api/complaints`, `/api/complaints/my`, `/api/complaints/upload-images`, … | Complaints by category |
+| GET/POST/PATCH | `/api/cleaning/*` | Room cleaning slots, requests, worker completion, student rating |
+| GET/POST/PATCH | `/api/laundry/*` | Laundry orders, claim, assign, status |
+| POST/GET | `/api/mess-feedback` | Mess ratings + optional image |
+| GET/POST/PATCH | `/api/lost-found` | Lost/found + images |
+| POST/GET | `/api/notices` | Admin notices (students / workers) |
+| GET | `/api/admin/analytics` | Complaint counts by category |
+| GET | `/api/admin/workers` | Worker list |
+| PATCH | `/api/admin/cleaning/:id/assign` | Assign cleaner |
+| GET | `/api/worker/tasks` | Worker task overview |
 
-1. Create a MongoDB Atlas cluster
-2. Create a database user + password
-3. Add your IP access (for development) or allow access as needed
-4. Copy your connection string → this becomes `MONGODB_URI`
+All protected routes expect header: `Authorization: Bearer <token>`.
 
-### Deploy backend on Render
+## Deployment (optional)
 
-1. Push this repo to GitHub
-2. In Render: **New + → Web Service**
-3. Connect your repo
-4. Settings:
-   - **Root Directory**: `backend`
-   - **Build Command**: `npm install`
-   - **Start Command**: `npm start`
-5. Add environment variables:
-   - `MONGODB_URI` = your MongoDB Atlas connection string
-   - `CLIENT_ORIGIN` = your Vercel frontend URL (example: `https://your-app.vercel.app`)
-   - `PORT` is provided by Render automatically (you can omit it)
-6. Deploy. Copy the Render URL (example: `https://your-backend.onrender.com`)
+### MongoDB Atlas
 
-### Deploy frontend on Vercel
+Create a cluster, database user, allow network access, copy connection string into `MONGODB_URI`.
 
-1. In Vercel: **New Project**
-2. Import your GitHub repo
-3. Settings:
-   - **Root Directory**: `frontend`
-   - Framework preset: Vite/React (auto-detected)
-4. Add environment variables:
-   - `VITE_API_BASE_URL` = your Render backend URL (example: `https://your-backend.onrender.com`)
-5. Deploy
+### Backend (e.g. Render)
 
-### Important deployment notes
+1. New **Web Service**, root directory `backend`.  
+2. Build: `npm install` · Start: `npm start`  
+3. Env: `MONGODB_URI`, `JWT_SECRET`, `CLIENT_ORIGIN` (your Vercel URL), `PORT` auto on Render.
 
-- **CORS**: set backend `CLIENT_ORIGIN` to your Vercel URL (or comma-separated list of allowed origins).
-- **Passwords**: stored securely as bcrypt hashes in MongoDB.
+Ensure the host **persists `uploads/`** or switch to S3-style storage for production files.
 
+### Frontend (e.g. Vercel)
+
+1. Root directory `frontend`, framework Vite.  
+2. Env: `VITE_API_BASE_URL=https://your-api.onrender.com` (no trailing slash required).
+
+Redeploy after env changes. Point `CLIENT_ORIGIN` on the backend to the exact Vercel URL.
+
+## Notes
+
+- Passwords are hashed with bcrypt.  
+- Roles: `student`, `admin`, `worker`.  
+- Room cleaning time slots are fixed **9:00–15:00** (hourly blocks) as per product rules.  
+- **Punjabi** UI copy lives in `frontend/src/i18n/strings.js`; toggle is in the header on key pages.

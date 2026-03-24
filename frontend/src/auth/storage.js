@@ -1,4 +1,4 @@
-const KEY = "smarthostel_auth_v1";
+const KEY = "hms_auth_v1";
 
 export function saveAuth(auth) {
   localStorage.setItem(KEY, JSON.stringify(auth));
@@ -16,4 +16,3 @@ export function loadAuth() {
 export function clearAuth() {
   localStorage.removeItem(KEY);
 }
-
