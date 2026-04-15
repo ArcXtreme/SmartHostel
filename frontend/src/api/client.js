@@ -2,7 +2,7 @@ import axios from "axios";
 import { loadAuth, clearAuth } from "../auth/storage.js";
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:4000",
+  baseURL: import.meta.env.VITE_API_BASE_URL || "https://smarthostel-4.onrender.com",
   timeout: 60000,
 });
 
