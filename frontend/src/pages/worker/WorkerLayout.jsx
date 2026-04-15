@@ -30,6 +30,14 @@ export default function WorkerLayout() {
               <LangToggle />
               <Link
                 className="hms-focus rounded-2xl border border-slate-300 bg-white px-4 py-2 text-base font-semibold"
+                to="/worker/profile"
+                aria-label="My Profile"
+                title="My Profile"
+              >
+                👤
+              </Link>
+              <Link
+                className="hms-focus rounded-2xl border border-slate-300 bg-white px-4 py-2 text-base font-semibold"
                 to="/worker"
               >
                 {t("dashboard")}

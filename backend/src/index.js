@@ -17,6 +17,7 @@ const noticesRoutes = require("./routes/notices");
 const adminRoutes = require("./routes/admin");
 const workerRoutes = require("./routes/worker");
 const studentRoutes = require("./routes/student");
+const profileRoutes = require("./routes/profile");
 
 const app = express();
 
@@ -61,6 +62,7 @@ app.use("/api", noticesRoutes);
 app.use("/api", adminRoutes);
 app.use("/api", workerRoutes);
 app.use("/api", studentRoutes);
+app.use("/api", profileRoutes);
 
 connectDB(MONGODB_URI).then(() => {
   app.listen(PORT, () => {

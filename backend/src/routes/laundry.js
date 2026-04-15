@@ -30,10 +30,31 @@ router.get("/laundry/my", requireAuth(["student"]), async (req, res) => {
     const orders = await LaundryOrder.find({ studentId: req.user._id })
       .sort({ createdAt: -1 })
       .populate("assignedTo", "name workerId")
+      .populate("studentId", "roomNumber hostelName name")
       .lean();
     res.json({ orders });
   } catch (err) {
     console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.post("/laundry/feedback", requireAuth(["student"]), async (req, res) => {
+  try {
+    const { laundryId, rating, description } = req.body || {};
+    const r = Number(rating);
+    if (!laundryId) return res.status(400).json({ message: "laundryId required" });
+    if (!Number.isFinite(r) || r < 1 || r > 5) return res.status(400).json({ message: "Rating 1-5 required" });
+    const doc = await LaundryOrder.findById(laundryId);
+    if (!doc) return res.status(404).json({ message: "Not found" });
+    if (String(doc.studentId) !== String(req.user._id)) return res.status(403).json({ message: "Forbidden" });
+
+    doc.rating = r;
+    doc.feedback = String(description || "").trim();
+    await doc.save();
+    res.status(201).json({ feedback: { rating: doc.rating, description: doc.feedback } });
+  } catch (e) {
+    console.error(e);
     res.status(500).json({ message: "Server error" });
   }
 });

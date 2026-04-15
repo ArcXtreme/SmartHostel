@@ -11,6 +11,8 @@ const laundryOrderSchema = new mongoose.Schema(
       default: "pending",
     },
     assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: "User", default: null },
+    rating: { type: Number, min: 1, max: 5 },
+    feedback: { type: String, trim: true, default: "" },
   },
   { timestamps: true }
 );

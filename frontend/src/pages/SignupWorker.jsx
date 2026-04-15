@@ -12,6 +12,7 @@ export default function SignupWorker() {
   const [form, setForm] = useState({
     name: "",
     workerId: "",
+    email: "",
     password: "",
   });
   const [busy, setBusy] = useState(false);
@@ -69,6 +70,13 @@ export default function SignupWorker() {
               required
             />
             <Input
+              label={t("email")}
+              type="email"
+              value={form.email}
+              onChange={(e) => set("email", e.target.value)}
+              required
+            />
+            <Input
               label={t("password")}
               type="password"
               value={form.password}
@@ -79,7 +87,7 @@ export default function SignupWorker() {
             <Button type="submit" className="w-full" size="lg" disabled={busy}>
               {busy ? t("loading") : t("signup")}
             </Button>
-            <Link className="text-center text-sky-700 hover:underline" to="/login?role=worker">
+            <Link className="text-center text-sky-700 hover:underline" to="/login">
               {t("login")}
             </Link>
           </form>

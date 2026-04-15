@@ -3,6 +3,7 @@ const { requireAuth } = require("../middleware/auth");
 const RoomCleaningRequest = require("../models/RoomCleaningRequest");
 const User = require("../models/User");
 const { notifyUser } = require("../utils/notify");
+const mongoose = require("mongoose");
 
 const router = express.Router();
 
@@ -79,13 +80,62 @@ router.get("/cleaning/my", requireAuth(["student"]), async (req, res) => {
       .sort({ date: -1, timeSlot: -1 })
       .populate("assignedTo", "name workerId")
       .lean();
+    const lastCleanedHistory = await RoomCleaningRequest.find({
+      studentId: req.user._id,
+      status: "completed",
+      workerCompletedAt: { $type: "date" },
+    })
+      .sort({ workerCompletedAt: -1 })
+      .limit(10)
+      .select("workerCompletedAt workerName")
+      .lean();
     res.json({
       lastCleanedAt: student.lastRoomCleanedAt,
       lastCleanedBy: student.lastRoomCleanedByName,
       requests,
+      lastCleanedHistory: lastCleanedHistory.map((r) => ({
+        _id: r._id,
+        cleanedAt: r.workerCompletedAt,
+        cleanerName: r.workerName,
+      })),
     });
   } catch (err) {
     console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.post("/cleaning/feedback", requireAuth(["student"]), async (req, res) => {
+  try {
+    const { cleanerName, rating, description } = req.body || {};
+    const r = Number(rating);
+    if (!cleanerName || typeof cleanerName !== "string") {
+      return res.status(400).json({ message: "Cleaner name is required" });
+    }
+    if (!Number.isFinite(r) || r < 1 || r > 5) {
+      return res.status(400).json({ message: "Rating 1-5 required" });
+    }
+    if (!description || typeof description !== "string") {
+      return res.status(400).json({ message: "Description is required" });
+    }
+
+    // Store feedback on most recent completed cleaning (if any) for traceability
+    const doc = await RoomCleaningRequest.findOne({
+      studentId: req.user._id,
+      status: "completed",
+    }).sort({ workerCompletedAt: -1 });
+
+    if (!doc) {
+      return res.status(400).json({ message: "No completed cleaning found yet" });
+    }
+    doc.studentConfirmedAt = new Date();
+    doc.rating = r;
+    doc.feedback = String(description).trim();
+    doc.workerName = String(cleanerName).trim();
+    await doc.save();
+    res.status(201).json({ feedback: { rating: r, description: doc.feedback, cleanerName: doc.workerName } });
+  } catch (e) {
+    console.error(e);
     res.status(500).json({ message: "Server error" });
   }
 });

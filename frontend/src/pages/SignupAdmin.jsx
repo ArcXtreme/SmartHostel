@@ -87,7 +87,7 @@ export default function SignupAdmin() {
             <Button type="submit" className="w-full" size="lg" disabled={busy}>
               {busy ? t("loading") : t("signup")}
             </Button>
-            <Link className="text-center text-sky-700 hover:underline" to="/login?role=admin">
+            <Link className="text-center text-sky-700 hover:underline" to="/login">
               {t("login")}
             </Link>
           </form>

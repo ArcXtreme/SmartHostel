@@ -8,6 +8,7 @@ import { useI18n } from "../../i18n/I18nContext.jsx";
 
 const links = [
   ["", "dashboard"],
+  ["profile", "profile"],
   ["complaints-list", "complaintList"],
   ["cleaning", "cleaning"],
   ["complaint/internet", "internet"],
@@ -47,6 +48,14 @@ export default function StudentLayout() {
             </div>
             <div className="flex flex-wrap items-center gap-3">
               <LangToggle />
+              <Link
+                className="hms-focus rounded-2xl border border-slate-300 bg-white px-4 py-2 text-base font-semibold text-slate-800"
+                to="/student/profile"
+                aria-label="My Profile"
+                title="My Profile"
+              >
+                👤
+              </Link>
               <Link
                 className="hms-focus rounded-2xl border border-slate-300 bg-white px-4 py-2 text-base font-semibold text-slate-800"
                 to="/student"

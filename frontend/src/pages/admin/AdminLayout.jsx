@@ -7,6 +7,7 @@ import { useI18n } from "../../i18n/I18nContext.jsx";
 
 const links = [
   ["", "dashboard"],
+  ["/admin/profile", "profile"],
   ["/admin/complaints", "complaintList"],
   ["/admin/analytics", "analytics"],
   ["/admin/notices", "postNotice"],
@@ -37,6 +38,14 @@ export default function AdminLayout() {
             </div>
             <div className="flex flex-wrap items-center gap-3">
               <LangToggle />
+              <Link
+                className="hms-focus rounded-2xl border border-slate-300 bg-white px-4 py-2 text-base font-semibold"
+                to="/admin/profile"
+                aria-label="My Profile"
+                title="My Profile"
+              >
+                👤
+              </Link>
               <Button variant="ghost" onClick={logout}>
                 {t("logout")}
               </Button>

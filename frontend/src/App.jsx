@@ -5,6 +5,7 @@ import Login from "./pages/Login.jsx";
 import SignupStudent from "./pages/SignupStudent.jsx";
 import SignupAdmin from "./pages/SignupAdmin.jsx";
 import SignupWorker from "./pages/SignupWorker.jsx";
+import MyProfile from "./pages/MyProfile.jsx";
 import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
 
 import StudentLayout from "./pages/student/StudentLayout.jsx";
@@ -44,6 +45,7 @@ export default function App() {
         <Route element={<ProtectedRoute roles={["student"]} />}>
           <Route path="/student" element={<StudentLayout />}>
             <Route index element={<StudentDashboard />} />
+            <Route path="profile" element={<MyProfile />} />
             <Route path="complaints-list" element={<StudentComplaintsList />} />
             <Route path="cleaning" element={<StudentCleaning />} />
             <Route path="complaint/:category" element={<StudentComplaint />} />
@@ -57,6 +59,7 @@ export default function App() {
         <Route element={<ProtectedRoute roles={["admin"]} />}>
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
+            <Route path="profile" element={<MyProfile />} />
             <Route path="complaints" element={<AdminComplaints />} />
             <Route path="analytics" element={<AdminAnalytics />} />
             <Route path="notices" element={<AdminNotices />} />
@@ -70,6 +73,7 @@ export default function App() {
         <Route element={<ProtectedRoute roles={["worker"]} />}>
           <Route path="/worker" element={<WorkerLayout />}>
             <Route index element={<WorkerDashboard />} />
+            <Route path="profile" element={<MyProfile />} />
             <Route path="tasks" element={<WorkerTasks />} />
           </Route>
         </Route>

@@ -30,9 +30,6 @@ const userSchema = new mongoose.Schema(
 userSchema.index({ email: 1 }, { unique: true, sparse: true });
 userSchema.index({ idNumber: 1 }, { unique: true, sparse: true });
 userSchema.index({ workerId: 1 }, { unique: true, sparse: true });
-userSchema.index(
-  { hostelName: 1, roomNumber: 1 },
-  { unique: true, partialFilterExpression: { role: "student", hostelName: { $type: "string" } } }
-);
+// NOTE: roomNumber must NOT be unique; multiple students can share a room.
 
 module.exports = mongoose.model("User", userSchema);

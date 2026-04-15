@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { api } from "../api/client.js";
 import { saveAuth } from "../auth/storage.js";
-import { Container, Alert, Button, Input } from "../components/ui.jsx";
+import { Container, Alert, Button, Input, Select } from "../components/ui.jsx";
 import { LangToggle } from "../components/LangToggle.jsx";
 import { useI18n } from "../i18n/I18nContext.jsx";
+
+const HOSTELS = ["Chenab", "Raavi", "Beas", "Satluj", "Brahmaputra"];
+const ROLL_RE = /^[0-9]{4}[a-z]{3}[0-9]{4}$/;
 
 export default function SignupStudent() {
   const { t } = useI18n();
@@ -27,6 +30,14 @@ export default function SignupStudent() {
   async function onSubmit(e) {
     e.preventDefault();
     setErr("");
+    if (!ROLL_RE.test(String(form.rollNumber || "").trim())) {
+      setErr("Roll number must match format like 2024eeb1179");
+      return;
+    }
+    if (!HOSTELS.includes(String(form.hostelName || "").trim())) {
+      setErr("Please select a valid hostel name");
+      return;
+    }
     setBusy(true);
     try {
       const { data } = await api.post("/api/auth/signup/student", form);
@@ -86,12 +97,14 @@ export default function SignupStudent() {
               required
               minLength={6}
             />
-            <Input
-              label={t("hostelName")}
-              value={form.hostelName}
-              onChange={(e) => set("hostelName", e.target.value)}
-              required
-            />
+            <Select label={t("hostelName")} value={form.hostelName} onChange={(e) => set("hostelName", e.target.value)} required>
+              <option value="">—</option>
+              {HOSTELS.map((h) => (
+                <option key={h} value={h}>
+                  {h}
+                </option>
+              ))}
+            </Select>
             <Input
               label={t("roomNumber")}
               value={form.roomNumber}
@@ -102,7 +115,7 @@ export default function SignupStudent() {
             <Button type="submit" className="w-full" size="lg" disabled={busy}>
               {busy ? t("loading") : t("signup")}
             </Button>
-            <Link className="text-center text-sky-700 hover:underline" to="/login?role=student">
+            <Link className="text-center text-sky-700 hover:underline" to="/login">
               {t("login")}
             </Link>
           </form>

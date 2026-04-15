@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 import { Container } from "../components/ui.jsx";
 import { LangToggle } from "../components/LangToggle.jsx";
 import { useI18n } from "../i18n/I18nContext.jsx";
+import iitRoparLogo from "../assets/iit-ropar-logo.svg";
 
 function RoleCard({ icon, title, toLogin, toSignup, loginLabel, signupLabel }) {
   return (
     <div className="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
       <div className="text-5xl" aria-hidden>
-        {icon}
+        {typeof icon === "string" ? icon : icon}
       </div>
       <h2 className="text-2xl font-bold text-slate-800">{title}</h2>
       <div className="mt-auto flex flex-col gap-3 sm:flex-row">
@@ -51,23 +52,23 @@ export default function Landing() {
           <RoleCard
             icon="🎓"
             title={t("student")}
-            toLogin="/login?role=student"
+            toLogin="/login"
             toSignup="/signup/student"
             loginLabel={`${t("student")} — ${t("roleLogin")}`}
             signupLabel={t("signup")}
           />
           <RoleCard
-            icon="🛡️"
+            icon={<img src={iitRoparLogo} alt="IIT Ropar" className="h-14 w-14 object-contain" />}
             title={t("admin")}
-            toLogin="/login?role=admin"
+            toLogin="/login"
             toSignup="/signup/admin"
             loginLabel={`${t("admin")} — ${t("roleLogin")}`}
             signupLabel={t("signup")}
           />
           <RoleCard
-            icon="🧹"
+            icon="🧑‍🔧"
             title={t("worker")}
-            toLogin="/login?role=worker"
+            toLogin="/login"
             toSignup="/signup/worker"
             loginLabel={`${t("worker")} — ${t("roleLogin")}`}
             signupLabel={t("signup")}
