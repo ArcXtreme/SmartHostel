@@ -102,11 +102,11 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-[#e8f4fc]">
-      <header className="border-b border-sky-100 bg-white">
+    <div className="app-shell min-h-screen">
+      <header className="border-b border-white/10 bg-slate-900/45 backdrop-blur-xl">
         <Container>
           <div className="flex flex-col gap-4 py-6 sm:flex-row sm:items-center sm:justify-between">
-            <Link className="text-xl font-bold text-slate-900" to="/">
+            <Link className="text-xl font-bold text-slate-100" to="/">
               ← {t("appTitle")}
             </Link>
             <LangToggle />
@@ -116,7 +116,7 @@ export default function Login() {
 
       <Container>
         <div className="mx-auto max-w-lg py-10">
-          <h1 className="mb-6 text-3xl font-bold text-slate-900">{forgotMode ? "Forgot Password" : t("login")}</h1>
+          <h1 className="mb-6 text-3xl font-bold text-slate-100">{forgotMode ? "Forgot Password" : t("login")}</h1>
 
           {err ? (
             <div className="mb-4">
@@ -130,7 +130,7 @@ export default function Login() {
           ) : null}
 
           {!forgotMode ? (
-            <form onSubmit={onSubmit} className="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <form onSubmit={onSubmit} className="glass flex flex-col gap-4 rounded-3xl p-6">
               <Input
                 label={t("email")}
                 type="email"
@@ -155,18 +155,18 @@ export default function Login() {
 
               <button
                 type="button"
-                className="text-center text-sky-700 hover:underline"
+                className="text-center text-blue-300 hover:text-blue-200 hover:underline"
                 onClick={() => setForgotMode(true)}
               >
                 Forgot Password?
               </button>
 
-              <Link className="text-center text-sky-700 hover:underline" to={signupPath}>
+              <Link className="text-center text-blue-300 hover:text-blue-200 hover:underline" to={signupPath}>
                 {t("signup")}
               </Link>
             </form>
           ) : (
-            <div className="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="glass flex flex-col gap-4 rounded-3xl p-6">
               <form onSubmit={requestOtp} className="flex flex-col gap-3">
                 <Input
                   label="Registered Email"
@@ -207,7 +207,7 @@ export default function Login() {
 
               <button
                 type="button"
-                className="text-center text-sky-700 hover:underline"
+                className="text-center text-blue-300 hover:text-blue-200 hover:underline"
                 onClick={() => {
                   setForgotMode(false);
                   setOtpSent(false);

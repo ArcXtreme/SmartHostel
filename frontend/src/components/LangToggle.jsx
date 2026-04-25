@@ -7,18 +7,18 @@ export function LangToggle() {
 
   return (
     <div
-      className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-3 py-2 shadow-sm"
+      className="glass flex items-center gap-3 rounded-full px-3 py-2"
       role="group"
       aria-label="Language"
     >
-      <span className="text-sm font-medium text-slate-500">{t("langEn")}</span>
+      <span className="text-sm font-medium text-slate-300">{t("langEn")}</span>
       <button
         type="button"
         role="switch"
         aria-checked={isPa}
         onClick={() => setLang(isPa ? "en" : "pa")}
         className={`relative h-8 w-14 rounded-full transition ${
-          isPa ? "bg-sky-600" : "bg-slate-300"
+          isPa ? "bg-gradient-to-r from-blue-500 to-violet-500" : "bg-slate-600"
         }`}
       >
         <span
@@ -27,7 +27,7 @@ export function LangToggle() {
           }`}
         />
       </button>
-      <span className="text-sm font-medium text-slate-500">{t("langPa")}</span>
+      <span className="text-sm font-medium text-slate-300">{t("langPa")}</span>
     </div>
   );
 }

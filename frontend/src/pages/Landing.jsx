@@ -7,20 +7,23 @@ import iitRoparLogo from "../assets/iit-ropar-logo.svg";
 
 function RoleCard({ icon, title, toLogin, toSignup, loginLabel, signupLabel }) {
   return (
-    <div className="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-      <div className="text-5xl" aria-hidden>
+    <div className="glass lift-hover flex flex-col gap-4 rounded-3xl p-6">
+      <div
+        className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500/30 via-violet-500/30 to-purple-500/30 text-5xl shadow-lg shadow-blue-900/40"
+        aria-hidden
+      >
         {typeof icon === "string" ? icon : icon}
       </div>
-      <h2 className="text-2xl font-bold text-slate-800">{title}</h2>
+      <h2 className="text-2xl font-bold text-slate-50">{title}</h2>
       <div className="mt-auto flex flex-col gap-3 sm:flex-row">
         <Link
-          className="hms-focus flex min-h-[52px] flex-1 items-center justify-center rounded-2xl bg-sky-600 text-lg font-semibold text-white hover:bg-sky-500"
+          className="hms-focus flex min-h-[52px] flex-1 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-500 via-violet-500 to-purple-500 text-lg font-semibold text-white shadow-lg shadow-blue-900/35 transition duration-200 hover:brightness-110"
           to={toLogin}
         >
           {loginLabel}
         </Link>
         <Link
-          className="hms-focus flex min-h-[52px] flex-1 items-center justify-center rounded-2xl border-2 border-slate-300 bg-white text-lg font-semibold text-slate-800 hover:bg-slate-50"
+          className="hms-focus flex min-h-[52px] flex-1 items-center justify-center rounded-2xl border border-white/35 bg-white/5 text-lg font-semibold text-slate-100 transition duration-200 hover:bg-white/10"
           to={toSignup}
         >
           {signupLabel}
@@ -34,13 +37,16 @@ export default function Landing() {
   const { t } = useI18n();
 
   return (
-    <div className="min-h-screen bg-[#e8f4fc]">
-      <header className="border-b border-sky-100 bg-white/90 backdrop-blur">
+    <div className="app-shell mesh-bg relative min-h-screen overflow-hidden">
+      <div className="pointer-events-none absolute -left-24 top-20 h-72 w-72 rounded-full bg-violet-500/25 blur-3xl" />
+      <div className="pointer-events-none absolute -right-24 bottom-10 h-80 w-80 rounded-full bg-blue-500/20 blur-3xl" />
+
+      <header className="sticky top-0 z-10 border-b border-white/10 bg-slate-900/45 backdrop-blur-xl">
         <Container>
           <div className="flex flex-col gap-4 py-6 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <div className="text-sm font-medium text-slate-500">{t("welcome")}</div>
-              <h1 className="text-3xl font-bold tracking-tight text-slate-900">{t("appTitle")}</h1>
+              <div className="text-sm font-medium text-slate-300">{t("welcome")}</div>
+              <h1 className="gradient-text text-3xl font-bold tracking-tight">{t("appTitle")}</h1>
             </div>
             <LangToggle />
           </div>
@@ -48,7 +54,14 @@ export default function Landing() {
       </header>
 
       <Container>
-        <div className="grid grid-cols-1 gap-6 py-10 md:grid-cols-3">
+        <div className="py-10 text-center">
+          <h2 className="text-4xl font-extrabold text-slate-100 sm:text-5xl">
+            Hostel Management, <span className="gradient-text">Reimagined</span>
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-300">{t("homeBlurb")}</p>
+        </div>
+
+        <div className="grid grid-cols-1 gap-6 pb-8 md:grid-cols-3">
           <RoleCard
             icon="🎓"
             title={t("student")}
@@ -74,7 +87,6 @@ export default function Landing() {
             signupLabel={t("signup")}
           />
         </div>
-        <p className="pb-10 text-center text-slate-600">{t("homeBlurb")}</p>
       </Container>
     </div>
   );

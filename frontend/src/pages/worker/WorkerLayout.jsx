@@ -16,20 +16,20 @@ export default function WorkerLayout() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f4f7fb]">
-      <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/95 backdrop-blur">
+    <div className="app-shell min-h-screen">
+      <header className="sticky top-0 z-10 border-b border-white/10 bg-slate-900/45 backdrop-blur-xl">
         <Container>
           <div className="flex flex-col gap-4 py-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <div className="text-sm text-slate-500">{t("worker")}</div>
-              <div className="text-xl font-bold text-slate-900">
+              <div className="text-sm text-slate-300">{t("worker")}</div>
+              <div className="text-xl font-bold text-slate-100">
                 {auth?.user?.name} · {auth?.user?.workerId}
               </div>
             </div>
             <div className="flex flex-wrap items-center gap-3">
               <LangToggle />
               <Link
-                className="hms-focus rounded-2xl border border-slate-300 bg-white px-4 py-2 text-base font-semibold"
+                className="hms-focus rounded-2xl border border-white/25 bg-white/10 px-4 py-2 text-base font-semibold text-slate-100"
                 to="/worker/profile"
                 aria-label="My Profile"
                 title="My Profile"
@@ -37,13 +37,13 @@ export default function WorkerLayout() {
                 👤
               </Link>
               <Link
-                className="hms-focus rounded-2xl border border-slate-300 bg-white px-4 py-2 text-base font-semibold"
+                className="hms-focus rounded-2xl border border-white/25 bg-white/10 px-4 py-2 text-base font-semibold text-slate-100"
                 to="/worker"
               >
                 {t("dashboard")}
               </Link>
               <Link
-                className="hms-focus rounded-2xl border border-slate-300 bg-white px-4 py-2 text-base font-semibold"
+                className="hms-focus rounded-2xl border border-white/25 bg-white/10 px-4 py-2 text-base font-semibold text-slate-100"
                 to="/worker/tasks"
               >
                 {t("workersTasks")}

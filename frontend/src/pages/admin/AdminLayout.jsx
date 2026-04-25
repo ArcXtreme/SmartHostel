@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { clearAuth, loadAuth } from "../../auth/storage.js";
 import { Container, Button } from "../../components/ui.jsx";
 import { LangToggle } from "../../components/LangToggle.jsx";
@@ -20,6 +20,7 @@ const links = [
 export default function AdminLayout() {
   const { t } = useI18n();
   const navigate = useNavigate();
+  const location = useLocation();
   const auth = loadAuth();
 
   function logout() {
@@ -28,18 +29,18 @@ export default function AdminLayout() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f4f7fb]">
-      <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/95 backdrop-blur">
+    <div className="app-shell min-h-screen">
+      <header className="sticky top-0 z-10 border-b border-white/10 bg-slate-900/45 backdrop-blur-xl">
         <Container>
           <div className="flex flex-col gap-4 py-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <div className="text-sm text-slate-500">{t("admin")}</div>
-              <div className="text-xl font-bold text-slate-900">{auth?.user?.name}</div>
+              <div className="text-sm text-slate-300">{t("admin")}</div>
+              <div className="text-xl font-bold text-slate-100">{auth?.user?.name}</div>
             </div>
             <div className="flex flex-wrap items-center gap-3">
               <LangToggle />
               <Link
-                className="hms-focus rounded-2xl border border-slate-300 bg-white px-4 py-2 text-base font-semibold"
+                className="hms-focus rounded-2xl border border-white/25 bg-white/10 px-4 py-2 text-base font-semibold text-slate-100"
                 to="/admin/profile"
                 aria-label="My Profile"
                 title="My Profile"
@@ -51,16 +52,24 @@ export default function AdminLayout() {
               </Button>
             </div>
           </div>
-          <nav className="flex flex-wrap gap-2 pb-4">
-            {links.map(([path, key]) => (
-              <Link
-                key={path || "dash"}
-                className="rounded-2xl bg-sky-50 px-4 py-2 text-sm font-semibold text-sky-900 hover:bg-sky-100"
-                to={path || "/admin"}
-              >
-                {t(key)}
-              </Link>
-            ))}
+          <nav className="no-scrollbar flex gap-2 overflow-x-auto pb-4">
+            {links.map(([path, key]) => {
+              const target = path || "/admin";
+              const active = location.pathname === target;
+              return (
+                <Link
+                  key={path || "dash"}
+                  className={`hms-focus pill-tab shrink-0 px-4 py-2 text-sm font-semibold transition duration-200 ${
+                    active
+                      ? "bg-gradient-to-r from-blue-500/80 via-violet-500/80 to-purple-500/80 text-white shadow-md shadow-violet-900/35"
+                      : "bg-slate-900/35 text-slate-200 hover:bg-slate-800/55"
+                  }`}
+                  to={target}
+                >
+                  {t(key)}
+                </Link>
+              );
+            })}
           </nav>
         </Container>
       </header>

@@ -38,11 +38,11 @@ export default function SignupWorker() {
   }
 
   return (
-    <div className="min-h-screen bg-[#e8f4fc]">
-      <header className="border-b border-sky-100 bg-white">
+    <div className="app-shell min-h-screen">
+      <header className="border-b border-white/10 bg-slate-900/45 backdrop-blur-xl">
         <Container>
           <div className="flex flex-col gap-4 py-6 sm:flex-row sm:items-center sm:justify-between">
-            <Link className="text-xl font-bold text-slate-900" to="/">
+            <Link className="text-xl font-bold text-slate-100" to="/">
               ← {t("appTitle")}
             </Link>
             <LangToggle />
@@ -52,8 +52,8 @@ export default function SignupWorker() {
 
       <Container>
         <div className="mx-auto max-w-lg py-10">
-          <h1 className="mb-2 text-3xl font-bold text-slate-900">{t("signup")}</h1>
-          <div className="mb-6 text-slate-600">{t("worker")}</div>
+          <h1 className="mb-2 text-3xl font-bold text-slate-100">{t("signup")}</h1>
+          <div className="mb-6 text-slate-300">{t("worker")}</div>
 
           {err ? (
             <div className="mb-4">
@@ -61,7 +61,7 @@ export default function SignupWorker() {
             </div>
           ) : null}
 
-          <form onSubmit={onSubmit} className="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+          <form onSubmit={onSubmit} className="glass flex flex-col gap-4 rounded-3xl p-6">
             <Input label={t("name")} value={form.name} onChange={(e) => set("name", e.target.value)} required />
             <Input
               label={t("workerId")}
@@ -87,7 +87,7 @@ export default function SignupWorker() {
             <Button type="submit" className="w-full" size="lg" disabled={busy}>
               {busy ? t("loading") : t("signup")}
             </Button>
-            <Link className="text-center text-sky-700 hover:underline" to="/login">
+            <Link className="text-center text-blue-300 hover:text-blue-200 hover:underline" to="/login">
               {t("login")}
             </Link>
           </form>
