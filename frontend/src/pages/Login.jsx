@@ -103,11 +103,14 @@ export default function Login() {
 
   return (
     <div className="app-shell min-h-screen">
-      <header className="border-b border-white/10 bg-slate-900/45 backdrop-blur-xl">
+      <header className="border-b border-slate-100 bg-white/80 backdrop-blur-sm">
         <Container>
           <div className="flex flex-col gap-4 py-6 sm:flex-row sm:items-center sm:justify-between">
-            <Link className="text-xl font-bold text-slate-100" to="/">
-              ← {t("appTitle")}
+            <Link className="flex items-center gap-2 text-xl font-bold text-[#0f172a]" to="/">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-purple-600 text-sm font-bold text-white">
+                S
+              </div>
+              <span style={{ fontFamily: "Sora, sans-serif" }}>SmartHostel</span>
             </Link>
             <LangToggle />
           </div>
@@ -116,7 +119,9 @@ export default function Login() {
 
       <Container>
         <div className="mx-auto max-w-lg py-10">
-          <h1 className="mb-6 text-3xl font-bold text-slate-100">{forgotMode ? "Forgot Password" : t("login")}</h1>
+          <h1 className="mb-6 text-3xl font-bold text-[#0f172a]" style={{ fontFamily: "Sora, sans-serif" }}>
+            {forgotMode ? "Forgot Password" : t("login")}
+          </h1>
 
           {err ? (
             <div className="mb-4">
@@ -155,13 +160,13 @@ export default function Login() {
 
               <button
                 type="button"
-                className="text-center text-blue-300 hover:text-blue-200 hover:underline"
+                className="text-center text-violet-600 hover:text-violet-700 hover:underline cursor-pointer"
                 onClick={() => setForgotMode(true)}
               >
                 Forgot Password?
               </button>
 
-              <Link className="text-center text-blue-300 hover:text-blue-200 hover:underline" to={signupPath}>
+              <Link className="text-center text-violet-600 hover:text-violet-700 hover:underline" to={signupPath}>
                 {t("signup")}
               </Link>
             </form>
@@ -207,7 +212,7 @@ export default function Login() {
 
               <button
                 type="button"
-                className="text-center text-blue-300 hover:text-blue-200 hover:underline"
+                className="text-center text-violet-600 hover:text-violet-700 hover:underline cursor-pointer"
                 onClick={() => {
                   setForgotMode(false);
                   setOtpSent(false);

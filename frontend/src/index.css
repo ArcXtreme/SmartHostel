@@ -1,35 +1,28 @@
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap");
 
+/* ──────────── Design Tokens ──────────── */
 :root {
-  --bg-main: #060d22;
-  --bg-elevated: #0f172a;
-  --bg-card: rgba(255, 255, 255, 0.82);
-  --bg-card-soft: rgba(248, 250, 252, 0.68);
-  --text-main: #f8fafc;
-  --text-muted: #cbd5e1;
-  --border-main: rgba(148, 163, 184, 0.22);
-  --accent-start: #3b82f6;
-  --accent-mid: #8b5cf6;
-  --accent-end: #a855f7;
-  --success-bg: rgba(16, 185, 129, 0.2);
-  --success-border: rgba(52, 211, 153, 0.35);
-  --danger-bg: rgba(239, 68, 68, 0.18);
-  --danger-border: rgba(248, 113, 113, 0.4);
-  --info-bg: rgba(59, 130, 246, 0.2);
-  --info-border: rgba(96, 165, 250, 0.4);
-}
-
-[data-theme="light"] {
-  --bg-main: #eef2ff;
+  --bg-main: #ffffff;
   --bg-elevated: #f8fafc;
-  --bg-card: rgba(255, 255, 255, 0.84);
-  --bg-card-soft: rgba(255, 255, 255, 0.66);
+  --bg-card: rgba(255, 255, 255, 0.92);
+  --bg-card-soft: rgba(248, 250, 252, 0.85);
   --text-main: #0f172a;
   --text-muted: #475569;
-  --border-main: rgba(148, 163, 184, 0.35);
+  --border-main: rgba(148, 163, 184, 0.30);
+  --accent: #7c3aed;
+  --accent-start: #7c3aed;
+  --accent-mid: #6d28d9;
+  --accent-end: #5b21b6;
+  --success-bg: rgba(16, 185, 129, 0.12);
+  --success-border: rgba(52, 211, 153, 0.45);
+  --danger-bg: rgba(239, 68, 68, 0.10);
+  --danger-border: rgba(248, 113, 113, 0.45);
+  --info-bg: rgba(124, 58, 237, 0.08);
+  --info-border: rgba(124, 58, 237, 0.25);
 }
 
+/* ──────────── Reset & Base ──────────── */
 html,
 body {
   height: 100%;
@@ -37,23 +30,28 @@ body {
 
 body {
   margin: 0;
-  font-family: "Inter", "Noto Sans Gurmukhi", "Noto Sans", ui-sans-serif, system-ui, -apple-system,
+  font-family: "Inter", "Noto Sans", "Noto Sans Gurmukhi", ui-sans-serif, system-ui, -apple-system,
     Segoe UI, Roboto, Arial, sans-serif;
-  background:
-    radial-gradient(circle at 20% -20%, rgba(59, 130, 246, 0.28), transparent 35%),
-    radial-gradient(circle at 90% 10%, rgba(168, 85, 247, 0.18), transparent 30%),
-    linear-gradient(145deg, #060d22, var(--bg-main));
+  background: var(--bg-main);
   color: var(--text-main);
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 * {
   box-sizing: border-box;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Sora", "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ──────────── App Shell ──────────── */
 .app-shell {
   position: relative;
   min-height: 100vh;
+  background: var(--bg-main);
 }
 
 .app-shell::before {
@@ -62,64 +60,87 @@ body {
   inset: -18% -12%;
   z-index: -2;
   background:
-    radial-gradient(circle at 18% 30%, rgba(59, 130, 246, 0.2), transparent 35%),
-    radial-gradient(circle at 82% 70%, rgba(139, 92, 246, 0.24), transparent 40%);
-  filter: blur(36px);
+    radial-gradient(circle at 18% 30%, rgba(124, 58, 237, 0.06), transparent 35%),
+    radial-gradient(circle at 82% 70%, rgba(99, 102, 241, 0.05), transparent 40%);
+  filter: blur(50px);
   animation: floatAura 12s ease-in-out infinite alternate;
 }
 
+/* ──────────── Glass Card ──────────── */
 .glass {
   border: 1px solid var(--border-main);
-  background: linear-gradient(165deg, var(--bg-card), var(--bg-card-soft));
+  background: var(--bg-card);
   border-radius: 20px;
   box-shadow:
-    0 16px 40px rgba(15, 23, 42, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.16);
-  backdrop-filter: blur(14px);
+    0 1px 3px rgba(15, 23, 42, 0.06),
+    0 8px 24px rgba(15, 23, 42, 0.04);
+  backdrop-filter: blur(12px);
 }
 
+/* ──────────── Pill Tab ──────────── */
 .pill-tab {
   border-radius: 999px;
-  border: 1px solid rgba(148, 163, 184, 0.3);
-  background: rgba(15, 23, 42, 0.44);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  background: rgba(248, 250, 252, 0.8);
 }
 
+/* ──────────── Text Utilities ──────────── */
 .soft-text {
   color: var(--text-muted);
 }
 
 .gradient-text {
-  background: linear-gradient(90deg, var(--accent-start), var(--accent-mid), var(--accent-end));
+  background: linear-gradient(135deg, var(--accent-start), var(--accent-mid), var(--accent-end));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
+/* ──────────── Focus Ring ──────────── */
 .hms-focus:focus-visible {
-  outline: 2px solid rgba(125, 211, 252, 0.9);
+  outline: 2px solid rgba(124, 58, 237, 0.6);
   outline-offset: 2px;
 }
 
+/* ──────────── Hover Lift ──────────── */
 .lift-hover {
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 .lift-hover:hover {
-  transform: translateY(-3px) scale(1.01);
-  border-color: rgba(147, 197, 253, 0.7);
+  transform: translateY(-4px) scale(1.01);
+  border-color: rgba(124, 58, 237, 0.3);
   box-shadow:
-    0 18px 38px rgba(8, 47, 73, 0.35),
-    0 0 0 1px rgba(129, 140, 248, 0.35);
+    0 12px 32px rgba(124, 58, 237, 0.10),
+    0 4px 12px rgba(15, 23, 42, 0.06);
 }
 
+/* ──────────── Landing Hero Mesh ──────────── */
 .mesh-bg {
   background:
-    radial-gradient(circle at 15% 20%, rgba(59, 130, 246, 0.35), transparent 35%),
-    radial-gradient(circle at 85% 15%, rgba(139, 92, 246, 0.32), transparent 35%),
-    radial-gradient(circle at 50% 85%, rgba(59, 130, 246, 0.22), transparent 35%),
-    linear-gradient(130deg, #020617 0%, #0f172a 45%, #1e1b4b 100%);
+    radial-gradient(ellipse at 15% 20%, rgba(124, 58, 237, 0.12), transparent 50%),
+    radial-gradient(ellipse at 85% 15%, rgba(99, 102, 241, 0.10), transparent 45%),
+    radial-gradient(ellipse at 50% 85%, rgba(124, 58, 237, 0.06), transparent 50%),
+    linear-gradient(180deg, #f8fafc 0%, #ffffff 40%, #faf5ff 100%);
 }
 
+/* ──────────── Sticky Header ──────────── */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  transition: background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.site-header.scrolled {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08), 0 4px 12px rgba(15, 23, 42, 0.04);
+}
+
+/* ──────────── Animations ──────────── */
 @keyframes floatAura {
   0% {
     transform: translate3d(-2%, -1%, 0);
@@ -127,4 +148,53 @@ body {
   100% {
     transform: translate3d(2%, 1%, 0);
   }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes subtleFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.fade-up {
+  animation: fadeUp 0.7s ease-out both;
+}
+
+.fade-up-delay-1 {
+  animation: fadeUp 0.7s 0.1s ease-out both;
+}
+
+.fade-up-delay-2 {
+  animation: fadeUp 0.7s 0.2s ease-out both;
+}
+
+.fade-up-delay-3 {
+  animation: fadeUp 0.7s 0.3s ease-out both;
+}
+
+.float-anim {
+  animation: subtleFloat 4s ease-in-out infinite;
+}
+
+/* ──────────── Scrollbar polish ──────────── */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

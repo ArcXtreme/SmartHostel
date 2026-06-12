@@ -17,19 +17,19 @@ export default function WorkerLayout() {
 
   return (
     <div className="app-shell min-h-screen">
-      <header className="sticky top-0 z-10 border-b border-white/10 bg-slate-900/45 backdrop-blur-xl">
+      <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/90 backdrop-blur-md">
         <Container>
           <div className="flex flex-col gap-4 py-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <div className="text-sm text-slate-300">{t("worker")}</div>
-              <div className="text-xl font-bold text-slate-100">
+              <div className="text-sm font-medium text-violet-600">{t("worker")}</div>
+              <div className="text-xl font-bold text-[#0f172a]" style={{ fontFamily: "Sora, sans-serif" }}>
                 {auth?.user?.name} · {auth?.user?.workerId}
               </div>
             </div>
             <div className="flex flex-wrap items-center gap-3">
               <LangToggle />
               <Link
-                className="hms-focus rounded-2xl border border-white/25 bg-white/10 px-4 py-2 text-base font-semibold text-slate-100"
+                className="hms-focus rounded-2xl border border-slate-200 bg-white px-4 py-2 text-base font-semibold text-[#0f172a] transition hover:bg-slate-50 hover:border-violet-300"
                 to="/worker/profile"
                 aria-label="My Profile"
                 title="My Profile"
@@ -37,13 +37,13 @@ export default function WorkerLayout() {
                 👤
               </Link>
               <Link
-                className="hms-focus rounded-2xl border border-white/25 bg-white/10 px-4 py-2 text-base font-semibold text-slate-100"
+                className="hms-focus rounded-2xl border border-slate-200 bg-white px-4 py-2 text-base font-semibold text-[#0f172a] transition hover:bg-slate-50 hover:border-violet-300"
                 to="/worker"
               >
                 {t("dashboard")}
               </Link>
               <Link
-                className="hms-focus rounded-2xl border border-white/25 bg-white/10 px-4 py-2 text-base font-semibold text-slate-100"
+                className="hms-focus rounded-2xl border border-slate-200 bg-white px-4 py-2 text-base font-semibold text-[#0f172a] transition hover:bg-slate-50 hover:border-violet-300"
                 to="/worker/tasks"
               >
                 {t("workersTasks")}

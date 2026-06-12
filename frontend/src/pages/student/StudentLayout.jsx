@@ -35,14 +35,14 @@ export default function StudentLayout() {
 
   return (
     <div className="app-shell min-h-screen">
-      <header className="sticky top-0 z-10 border-b border-white/10 bg-slate-900/45 backdrop-blur-xl">
+      <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/90 backdrop-blur-md">
         <Container>
           <div className="flex flex-col gap-4 py-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <div className="text-sm text-slate-300">{t("student")}</div>
-              <div className="text-xl font-bold text-slate-100">
+              <div className="text-sm font-medium text-violet-600">{t("student")}</div>
+              <div className="text-xl font-bold text-[#0f172a]" style={{ fontFamily: "Sora, sans-serif" }}>
                 {auth?.user?.name}{" "}
-                <span className="font-normal text-slate-300">
+                <span className="font-normal text-slate-500">
                   · {auth?.user?.hostelName} {auth?.user?.roomNumber}
                 </span>
               </div>
@@ -50,7 +50,7 @@ export default function StudentLayout() {
             <div className="flex flex-wrap items-center gap-3">
               <LangToggle />
               <Link
-                className="hms-focus rounded-2xl border border-white/25 bg-white/10 px-4 py-2 text-base font-semibold text-slate-100"
+                className="hms-focus rounded-2xl border border-slate-200 bg-white px-4 py-2 text-base font-semibold text-[#0f172a] transition hover:bg-slate-50 hover:border-violet-300"
                 to="/student/profile"
                 aria-label="My Profile"
                 title="My Profile"
@@ -58,7 +58,7 @@ export default function StudentLayout() {
                 👤
               </Link>
               <Link
-                className="hms-focus rounded-2xl border border-white/25 bg-white/10 px-4 py-2 text-base font-semibold text-slate-100"
+                className="hms-focus rounded-2xl border border-slate-200 bg-white px-4 py-2 text-base font-semibold text-[#0f172a] transition hover:bg-slate-50 hover:border-violet-300"
                 to="/student"
               >
                 {t("dashboard")}
@@ -77,8 +77,8 @@ export default function StudentLayout() {
                     key={path || "home"}
                     className={`hms-focus pill-tab shrink-0 px-4 py-2 text-sm font-semibold transition duration-200 ${
                       active
-                        ? "bg-gradient-to-r from-blue-500/80 via-violet-500/80 to-purple-500/80 text-white shadow-md shadow-violet-900/35"
-                        : "bg-slate-900/35 text-slate-200 hover:bg-slate-800/55"
+                        ? "bg-gradient-to-r from-violet-600 to-purple-600 text-white shadow-md shadow-violet-500/20 border-transparent"
+                        : "text-slate-600 hover:bg-slate-100 hover:text-[#0f172a]"
                     }`}
                     to={target}
                   >

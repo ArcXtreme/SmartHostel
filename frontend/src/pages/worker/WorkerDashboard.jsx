@@ -42,15 +42,15 @@ export default function WorkerDashboard() {
         <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-3">
           <Card>
             <div className="text-sm font-medium text-slate-500">{t("workersTasks")}</div>
-            <div className="mt-2 text-4xl font-bold text-slate-900">{data?.queryCount ?? 0}</div>
+            <div className="mt-2 text-4xl font-bold text-[#0f172a]">{data?.queryCount ?? 0}</div>
           </Card>
           <Card>
             <div className="text-sm font-medium text-slate-500">{t("notifications")}</div>
-            <div className="mt-2 text-4xl font-bold text-slate-900">{data?.notifications?.length ?? 0}</div>
+            <div className="mt-2 text-4xl font-bold text-[#0f172a]">{data?.notifications?.length ?? 0}</div>
           </Card>
           <Card>
             <Link
-              className="flex h-full min-h-[120px] items-center justify-center rounded-2xl bg-sky-600 text-2xl font-bold text-white hover:bg-sky-500"
+              className="flex h-full min-h-[120px] items-center justify-center rounded-2xl bg-gradient-to-r from-violet-600 to-purple-600 text-2xl font-bold text-white shadow-lg shadow-violet-500/20 hover:brightness-110 transition"
               to="/worker/tasks"
             >
               {t("workersTasks")}
@@ -60,26 +60,26 @@ export default function WorkerDashboard() {
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <Card>
-            <h3 className="mb-3 text-xl font-bold text-slate-900">{t("notifications")}</h3>
+            <h3 className="mb-3 text-xl font-bold text-[#0f172a]">{t("notifications")}</h3>
             <ul className="space-y-3">
               {(data?.notifications || []).slice(0, 8).map((n) => (
-                <li key={n._id} className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2">
+                <li key={n._id} className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-[#0f172a]">
                   {n.message}
                 </li>
               ))}
-              {!data?.notifications?.length ? <li className="text-slate-500">{t("noData")}</li> : null}
+              {!data?.notifications?.length ? <li className="text-slate-400">{t("noData")}</li> : null}
             </ul>
           </Card>
           <Card>
-            <h3 className="mb-3 text-xl font-bold text-slate-900">{t("fromAdmin")}</h3>
+            <h3 className="mb-3 text-xl font-bold text-[#0f172a]">{t("fromAdmin")}</h3>
             <ul className="space-y-3">
               {(data?.notices || []).map((n) => (
                 <li key={n._id} className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2">
-                  <div className="font-semibold">{n.title}</div>
-                  <div className="text-slate-700">{n.body}</div>
+                  <div className="font-semibold text-[#0f172a]">{n.title}</div>
+                  <div className="text-slate-600">{n.body}</div>
                 </li>
               ))}
-              {!data?.notices?.length ? <li className="text-slate-500">{t("noData")}</li> : null}
+              {!data?.notices?.length ? <li className="text-slate-400">{t("noData")}</li> : null}
             </ul>
           </Card>
         </div>
@@ -87,8 +87,8 @@ export default function WorkerDashboard() {
         <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
           {Object.entries(data?.cards || {}).map(([k, v]) => (
             <Card key={k} className="py-4">
-              <div className="text-sm capitalize text-slate-600">{k}</div>
-              <div className="text-3xl font-bold">{v}</div>
+              <div className="text-sm capitalize text-slate-500">{k}</div>
+              <div className="text-3xl font-bold text-[#0f172a]">{v}</div>
             </Card>
           ))}
         </div>

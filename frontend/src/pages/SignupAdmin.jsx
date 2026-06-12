@@ -39,11 +39,14 @@ export default function SignupAdmin() {
 
   return (
     <div className="app-shell min-h-screen">
-      <header className="border-b border-white/10 bg-slate-900/45 backdrop-blur-xl">
+      <header className="border-b border-slate-100 bg-white/80 backdrop-blur-sm">
         <Container>
           <div className="flex flex-col gap-4 py-6 sm:flex-row sm:items-center sm:justify-between">
-            <Link className="text-xl font-bold text-slate-100" to="/">
-              ← {t("appTitle")}
+            <Link className="flex items-center gap-2 text-xl font-bold text-[#0f172a]" to="/">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-purple-600 text-sm font-bold text-white">
+                S
+              </div>
+              <span style={{ fontFamily: "Sora, sans-serif" }}>SmartHostel</span>
             </Link>
             <LangToggle />
           </div>
@@ -52,8 +55,8 @@ export default function SignupAdmin() {
 
       <Container>
         <div className="mx-auto max-w-lg py-10">
-          <h1 className="mb-2 text-3xl font-bold text-slate-100">{t("signup")}</h1>
-          <div className="mb-6 text-slate-300">{t("admin")}</div>
+          <h1 className="mb-2 text-3xl font-bold text-[#0f172a]" style={{ fontFamily: "Sora, sans-serif" }}>{t("signup")}</h1>
+          <div className="mb-6 text-slate-500">{t("admin")}</div>
 
           {err ? (
             <div className="mb-4">
@@ -87,7 +90,7 @@ export default function SignupAdmin() {
             <Button type="submit" className="w-full" size="lg" disabled={busy}>
               {busy ? t("loading") : t("signup")}
             </Button>
-            <Link className="text-center text-blue-300 hover:text-blue-200 hover:underline" to="/login">
+            <Link className="text-center text-violet-600 hover:text-violet-700 hover:underline" to="/login">
               {t("login")}
             </Link>
           </form>
